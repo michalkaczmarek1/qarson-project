@@ -8,6 +8,23 @@ class Utilities
      public $file_ext;
      public $upload_success = 1;
      
+     private $dbUser = 'root';
+     private $dbPass = '';
+     private $dsn = 'mysql:host=localhost;dbname=qarson_db;charset=utf8';
+ 
+     public function dbConnection()
+     {
+         try {
+             $conn = new PDO($this->dsn, $this->dbUser, $this->dbPass);
+             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+             return $conn;
+         } catch (PDOException $e) {
+             echo "Połączenie nie udane: " . $e->getMessage();
+         }
+         
+ 
+ 
+     }
      
      /**
       * upload
@@ -121,16 +138,20 @@ class Utilities
      */
     public function loadData($data): array{
         
-        $newData["offers"] = [];
+        // $newData["offers"] = [];
 
+        for ($i=0; $i < count($data); $i++) { 
+            
+            foreach ($data as $key => $value) {
+                $newData["offers"]["make"] = $value["make"];
+                $newData["offers"]["model"] = $value["model"];
+                $newData["offers"]["engine"] = $value["engine"];
+                $newData["offers"]["availability"] = $value["availability"];
+                $newData["offers"]["photo"] = $value["photo"];
+            }
 
-        foreach ($data as $key => $value) {
-            $newData["offers"]["make"] = $data[$key]["make"];
-            $newData["offers"]["model"] = $data[$key]["model"];
-            $newData["offers"]["engine"] = $data[$key]["engine"];
-            $newData["offers"]["availability"] = $data[$key]["availability"];
-            $newData["offers"]["photo"] = $data[$key]["photo"];
         }
+        
     
         return $newData;
 

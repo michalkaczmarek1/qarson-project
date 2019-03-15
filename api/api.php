@@ -9,16 +9,16 @@
 //constants
 require_once($_SERVER['DOCUMENT_ROOT'] . "/qarson/config/constants.php");
 
-require_once(APP_CONFIG . "database.php");
 
 require_once(APP_ROOT . 'helpers/utilities.php');
 
 require_once(APP_MODEL . 'car.php');
 
-$db = new Database();
+
 $Util = new Utilities();
 $Car = new Car();
 
+$PDO = $Util->dbConnection();
 
 // variable require upload file
 $dir = "../data/";
@@ -42,23 +42,22 @@ if($Util->upload($dir, $path_file, $file_ext, $file_upload) === false){
             
             $jsonContent = json_decode(file_get_contents($dir.$file_upload['name']), true);
             // print_r ($jsonContent["offers"][0]['make']);
-            $newData = $Util->loadData($jsonContent["offers"]);
+            // $newData = $Util->loadData($jsonContent["offers"]);
 
-            print_r($jsonContent["offers"]);
+            // print_r($jsonContent["offers"]);
             // print_r(count($jsonContent["offers"]));
-            $Car->saveData($jsonContent, $db);
+            echo $Car->saveData($jsonContent["offers"], $PDO);
             // save data to database
             // $file->insertData($_SESSION['table_name'], $rows['headers'], $rows, $pdo);
         
         } catch (PDOException $e) {
-            echo "Blad";
+            echo $e->getMessage();
             //set variable session
             // $_SESSION['error_db'] = "<div class='alert alert-danger'>".$e->getMessage()."</div>";
         }
         
         // redirect to csv page
         // $Util->redirect();
-        
 
 }
 
