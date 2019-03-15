@@ -111,4 +111,29 @@ class Utilities
         header('Location: http://localhost/qarson/'.$path);
 
     }
+
+    /**
+     * loadData
+     * transformation data to array
+     * @param  mixed $data
+     *
+     * @return array
+     */
+    public function loadData($data): array{
+        
+        $newData["offers"] = [];
+
+
+        foreach ($data as $key => $value) {
+            $newData["offers"]["make"] = $data[$key]["make"];
+            $newData["offers"]["model"] = $data[$key]["model"];
+            $newData["offers"]["engine"] = $data[$key]["engine"];
+            $newData["offers"]["availability"] = $data[$key]["availability"];
+            $newData["offers"]["photo"] = $data[$key]["photo"];
+        }
+    
+        return $newData;
+
+    }
+
 }
