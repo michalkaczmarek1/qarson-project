@@ -18,41 +18,60 @@ class Car
 
         foreach ($file_input as $value) {
             // print_r ($value);
-    
+
             $this->model_name = $value["make"] . ' ' . $value["model"] . ' ' . $value["engine"];
             $value["photo"] = !isset($value["photo"]) ? "brak informacji" : $value["photo"];
             $value["availability"] = $value["availability"] === false ? "Nie" : $value["availability"];
 
-            $sql .= "('".htmlentities($value["make"])."','".htmlentities($value["model"])."','".htmlentities($value["engine"])."',
-            '".htmlentities($this->model_name)."','".htmlentities($value["photo"])."','".htmlentities($value["availability"]);
-            
+            $sql .= "('" . htmlentities($value["make"]) . "','" . htmlentities($value["model"]) . "','" . htmlentities($value["engine"]) . "',
+            '" . htmlentities($this->model_name) . "','" . htmlentities($value["photo"]) . "','" . htmlentities($value["availability"]);
+
             $i++;
 
-            if($i === count($file_input)){
+            if ($i === count($file_input)) {
                 $sql .= "')";
             } else {
                 $sql .= "'),";
             }
-            
+
             // $sql .= "('".htmlentities($value["make"])."','".htmlentities($value["model"])."','".htmlentities($value["engine"])."',
             // '".htmlentities($this->model_name)."','".htmlentities($value["photo"])."','".htmlentities($value["availability"])."')";
 
         }
-    
-            // $newData["offers"]["make"] = $value["make"];
-            // $newData["offers"]["model"] = $value["model"];
-            // $newData["offers"]["engine"] = $value["engine"];
-            // $newData["offers"]["availability"] = $value["availability"];
-            // $newData["offers"]["photo"] = $value["photo"];
-    
+
+        // $newData["offers"]["make"] = $value["make"];
+        // $newData["offers"]["model"] = $value["model"];
+        // $newData["offers"]["engine"] = $value["engine"];
+        // $newData["offers"]["availability"] = $value["availability"];
+        // $newData["offers"]["photo"] = $value["photo"];
+
         $insertSql = $database->prepare($sql);
 
-        if($insertSql->execute()){
+        if ($insertSql->execute()) {
             return true;
         } else {
             throw new PDOException("Błąd zapytania");
             return false;
         }
+
+    }
+
+    public function getCars(PDO $database): array
+    {
+
+        $sql = "SELECT * FROM cars";
+
+        $getSql = $database->prepare($sql);
+
+        if ($getSql->execute() === false) {
+            throw new PDOException("Błąd zapytania");
+        }
+
+        if ($getSql->rowCount() > 0) {
+            $result = $getSql->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $result;
 
     }
 }
