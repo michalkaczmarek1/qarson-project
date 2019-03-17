@@ -68,7 +68,7 @@ class Car
         }
 
         if ($getSql->rowCount() > 0) {
-            $result = $getSql->fetch(PDO::FETCH_ASSOC);
+            $result = $getSql->fetchAll();
         }
 
         return $result;

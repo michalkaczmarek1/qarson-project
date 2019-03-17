@@ -21,12 +21,20 @@ $(document).ready(function () {
                 
                 //insert data to table
                 $.each(data, function (index, value) { 
-                    table += '<tr><td>'+value.id+'</td>';
+                    if(value.availability === "Nie"){
+                        table += '<tr style="background-color:#959ba5;"><td>'+value.id+'</td>';    
+                    } else {
+                        table += '<tr><td>'+value.id+'</td>';
+                    }
                     table += '<td>'+value.mark+'</td>';
                     table += '<td>'+value.model+'</td>';
                     table += '<td>'+value.engine+'</td>';
                     table += '<td>'+value.model_name+'</td>';
-                    table += '<td>'+value.photo+'</td>';
+                    if(value.photo !== "brak informacji"){
+                        table += '<td><a href="'+value.photo+'" target="_blank">Kliknij aby zobaczyć zdjęcie</a></td>';
+                    } else {
+                        table += '<td>'+value.photo+'</td>';
+                    }
                     table += '<td>'+value.availability+'</td>';
                     table += '<td><a href="'+route+"/views/news/layouts/edit-form.html.php/edit/?id="+value.news_id+'" class="btn btn-warning">Zmien dostępność</a>';
                     // the form handle delete news
