@@ -27,7 +27,7 @@ if(count($_FILES) > 0){
     $file_upload = $_FILES['file_json'];
     $path_file = $dir . basename($file_upload["name"]);
     $file_ext = strtolower(pathinfo($path_file, PATHINFO_EXTENSION));
-    
+
     //the handling error upload file
     if($Util->upload($dir, $path_file, $file_ext, $file_upload) === false){
         $Util->redirect();
@@ -75,9 +75,12 @@ if(count($_FILES) > 0){
                 echo json_encode($results);
             }
             break;
-        
+        case 'change':
+            if($Car->changeAvailabilityCars($_GET['change'], $_GET['id'], $PDO)){
+                $Util->redirect();
+            }
         default:
-            # code...
+    
             break;
     }
 

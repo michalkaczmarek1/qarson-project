@@ -74,4 +74,20 @@ class Car
         return $result;
 
     }
+
+    public function changeAvailabilityCars($availability, $id, PDO $database)
+    {
+        $this->availability = $availability === false ? "Nie" : "Tak";
+        $changeSql = "UPDATE cars SET availability = '".$this->availability."' WHERE id = ".$id;
+
+        $changeSql = $database->prepare($changeSql);
+
+        if ($changeSql->execute() === false) {
+            throw new PDOException("Błąd zapytania");
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }

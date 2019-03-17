@@ -36,7 +36,11 @@ $(document).ready(function () {
                         table += '<td>'+value.photo+'</td>';
                     }
                     table += '<td>'+value.availability+'</td>';
-                    table += '<td><a href="'+route+"/views/news/layouts/edit-form.html.php/edit/?id="+value.news_id+'" class="btn btn-warning">Zmien dostępność</a>';
+                    if(value.availability === "Nie"){
+                        table += '<td><a href="'+route+'/api/api.php/change?change=true&id='+value.id+'" class=" change btn btn-warning">Zmien dostępność</a>';    
+                    } else {
+                        table += '<td><a href="'+route+'/api/api.php/change?change=false&id='+value.id+'" class=" change btn btn-warning">Zmien dostępność</a>';                
+                    }
                     // the form handle delete news
                     table += '<form style="display: inline-block;" method="post" id="delete-form" action="'+route+'/api-news.php/delete"><input type="hidden" value="'+value.news_id+'" name="news_id"><input type="submit" value="Usuń" class="btn btn-danger"></form>';
                 });
@@ -45,12 +49,13 @@ $(document).ready(function () {
                 table += "</table>";
 
                 $(table).appendTo('#content');
-
-                
+            
             },
         );
 
+       
         // $(this).attr('disabled', true);
     });
        
+  
 });
