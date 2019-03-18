@@ -77,9 +77,11 @@ if(count($_FILES) > 0){
             break;
         case 'change':
             $data = json_decode(file_get_contents("php://input"));
-            
-            $Car->changeAvailabilityCars($_GET['change'], $data->id, $PDO);
-                
+            $Car->changeAvailabilityCar($_GET['change'], $data->id, $PDO);
+            break;
+        case 'delete':
+            $data = json_decode(file_get_contents("php://input"));
+            $Car->deleteCar($data->id, $PDO);
         default:
             $results = $Car->getCars($PDO);
             if(count($results) > 0){

@@ -3,7 +3,7 @@
 $(document).ready(function(){
  
 
-    $(document).on('click', '.change-car', function(e){
+    $(document).on('click', '.delete-car', function(e){
 
         e.preventDefault();
         

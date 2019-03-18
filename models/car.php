@@ -75,7 +75,7 @@ class Car
 
     }
 
-    public function changeAvailabilityCars($availability, $id, PDO $database)
+    public function changeAvailabilityCar(string $availability, int $id, PDO $database)
     {
         // $this->availability = $availability === false ? "Nie" : "Tak";
         $changeSql = "UPDATE cars SET availability = '".$availability."' WHERE id = ".$id;
@@ -83,6 +83,22 @@ class Car
         $changeSql = $database->prepare($changeSql);
 
         if ($changeSql->execute() === false) {
+            throw new PDOException("Błąd zapytania");
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public function deleteCar(int $id, PDO $database)
+    {
+        // $this->availability = $availability === false ? "Nie" : "Tak";
+        $deleteSql = "DELETE FROM cars WHERE id = ".$id;
+
+        $deleteSql = $database->prepare($deleteSql);
+
+        if ($deleteSql->execute() === false) {
             throw new PDOException("Błąd zapytania");
             return false;
         } else {

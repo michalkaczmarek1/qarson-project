@@ -41,8 +41,8 @@ $(document).ready(function () {
                     } else {
                         table += '<td><a href="'+route+'/api/api.php/change?change=Nie" data-id='+value.id+' class="change-car btn btn-warning">Zmien dostępność</a>';                
                     }
-                    // the form handle delete news
-                    table += '<form style="display: inline-block;" method="post" id="delete-form" action="'+route+'/api-news.php/delete"><input type="hidden" value="'+value.news_id+'" name="news_id"><input type="submit" value="Usuń" class="btn btn-danger"></form>';
+                    table += '<td><a href="'+route+'/api/api.php/delete" data-id='+value.id+' class="delete-car btn btn-danger">Usuń</a>';                
+                    
                 });
 
                 table += "</tbody>";
