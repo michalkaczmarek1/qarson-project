@@ -37,9 +37,9 @@ $(document).ready(function () {
                     }
                     table += '<td>'+value.availability+'</td>';
                     if(value.availability === "Nie"){
-                        table += '<td><a href="'+route+'/api/api.php/change?change=true&id='+value.id+'" class=" change btn btn-warning">Zmien dostępność</a>';    
+                        table += '<td><a href="'+route+'/api/api.php/change?change=Tak" data-id='+value.id+' class="change-car btn btn-warning">Zmien dostępność</a>';    
                     } else {
-                        table += '<td><a href="'+route+'/api/api.php/change?change=false&id='+value.id+'" class=" change btn btn-warning">Zmien dostępność</a>';                
+                        table += '<td><a href="'+route+'/api/api.php/change?change=Nie" data-id='+value.id+' class="change-car btn btn-warning">Zmien dostępność</a>';                
                     }
                     // the form handle delete news
                     table += '<form style="display: inline-block;" method="post" id="delete-form" action="'+route+'/api-news.php/delete"><input type="hidden" value="'+value.news_id+'" name="news_id"><input type="submit" value="Usuń" class="btn btn-danger"></form>';

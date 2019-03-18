@@ -77,8 +77,8 @@ class Car
 
     public function changeAvailabilityCars($availability, $id, PDO $database)
     {
-        $this->availability = $availability === false ? "Nie" : "Tak";
-        $changeSql = "UPDATE cars SET availability = '".$this->availability."' WHERE id = ".$id;
+        // $this->availability = $availability === false ? "Nie" : "Tak";
+        $changeSql = "UPDATE cars SET availability = '".$availability."' WHERE id = ".$id;
 
         $changeSql = $database->prepare($changeSql);
 

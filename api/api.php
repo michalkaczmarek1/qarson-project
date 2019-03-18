@@ -76,11 +76,15 @@ if(count($_FILES) > 0){
             }
             break;
         case 'change':
-            if($Car->changeAvailabilityCars($_GET['change'], $_GET['id'], $PDO)){
-                $Util->redirect();
-            }
+            $data = json_decode(file_get_contents("php://input"));
+            
+            $Car->changeAvailabilityCars($_GET['change'], $data->id, $PDO);
+                
         default:
-    
+            $results = $Car->getCars($PDO);
+            if(count($results) > 0){
+                echo json_encode($results);
+            }
             break;
     }
 
