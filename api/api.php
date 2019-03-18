@@ -30,17 +30,12 @@ if(count($_FILES) > 0){
 
     //the handling error upload file
     if($Util->upload($dir, $path_file, $file_ext, $file_upload) === false){
-        $Util->redirect();
+        $Util->redirect('views/form.html.php');
     } else {
-            //set variable session
-            // $_SESSION['table_name'] = explode(".", $file_upload['name'])[0];
-
-            // load data with file csv
-            // $rows = $file->loadDataCsv($path_file);
-
+    
             // the handling errors insert data to database
             try {
-                echo "Sukces";
+                
                 
                 $jsonContent = json_decode(file_get_contents($dir.$file_upload['name']), true);
                 // print_r ($jsonContent["offers"][0]['make']);
@@ -49,6 +44,9 @@ if(count($_FILES) > 0){
                 // print_r($jsonContent["offers"]);
                 // print_r(count($jsonContent["offers"]));
                 echo $Car->saveData($jsonContent["offers"], $PDO);
+
+                $Util->redirect('views/form.html.php');
+                
                 // save data to database
                 // $file->insertData($_SESSION['table_name'], $rows['headers'], $rows, $pdo);
             

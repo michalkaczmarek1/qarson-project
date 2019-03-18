@@ -42,32 +42,31 @@ class Utilities
          $this->path_file = $path_file;
          $this->file_ext = $file_ext;
  
-         //check whether file has extension csv
-         if($file_ext !== 'json' ) {
-             echo json_encode($this->generateStatement("error_upload", "Plik nie jest w formacie json. Plik nie moze zostać przesłany."));
-             $this->upload_success = 0;
-             return false;
-         }
+        //check whether file has extension csv
+        if($file_ext !== 'json' && $this->checkEmptyFields($file_upload)) {
+            echo json_encode($this->generateStatement("error_upload", "Plik nie jest w formacie json. Plik nie moze zostać przesłany."));
+            $this->upload_success = 0;
+            return false;
+        }
+        
+        if (file_exists($path_file)) {
+            echo json_encode($this->generateStatement("error_upload_exist", "Plik już istnieje. Plik nie moze zostać przesłany."));
+            $this->upload_success = 0;
+            return false;
+        }
+        
+        // upload file
+        if (move_uploaded_file($file_upload["tmp_name"], $path_file)) {
+            echo json_encode($this->generateStatement("success_upload", "Plik ". basename( $file_upload["name"]). " został przesłany na serwer. Dane zostały zapisane w bazie"));
+            $this->upload_success = 1;
+            
+            return true;
+        } else {
+            echo json_encode($this->generateStatement("error_upload", "Plik nie moze zostać przesłany."));
+            $this->upload_success = 0;
+            return false;
+        }
          
-         //check whether file exist
-         if (file_exists($path_file)) {
-             echo json_encode($this->generateStatement("error_upload", "Plik już istnieje. Plik nie moze zostać przesłany."));
-             $this->upload_success = 0;
-             return false;
-         }
-         
-         // upload file
-         if (move_uploaded_file($file_upload["tmp_name"], $path_file)) {
-            //  echo json_encode($this->generateStatement("success_upload", "Plik ". basename( $file_upload["name"]). " został przesłany na serwer. Dane zostały zapisane w bazie"));
-             $this->upload_success = 1;
-             
-             return true;
-         } else {
-             echo json_encode($this->generateStatement("error_upload", "Plik nie moze zostać przesłany."));
-             $this->upload_success = 0;
-             return false;
-         }
- 
      }
 
       /**
@@ -110,6 +109,8 @@ class Utilities
 
         if($empty){
             echo json_encode($this->generateStatement('error_empty', 'Uzupełnij wszystkie pola'));
+            return false;
+        } else {
             return true;
         }
         
@@ -136,25 +137,25 @@ class Utilities
      *
      * @return array
      */
-    public function loadData($data): array{
+    // public function loadData($data): array{
         
-        // $newData["offers"] = [];
+    //     // $newData["offers"] = [];
 
-        for ($i=0; $i < count($data); $i++) { 
+    //     for ($i=0; $i < count($data); $i++) { 
             
-            foreach ($data as $key => $value) {
-                $newData["offers"]["make"] = $value["make"];
-                $newData["offers"]["model"] = $value["model"];
-                $newData["offers"]["engine"] = $value["engine"];
-                $newData["offers"]["availability"] = $value["availability"];
-                $newData["offers"]["photo"] = $value["photo"];
-            }
+    //         foreach ($data as $key => $value) {
+    //             $newData["offers"]["make"] = $value["make"];
+    //             $newData["offers"]["model"] = $value["model"];
+    //             $newData["offers"]["engine"] = $value["engine"];
+    //             $newData["offers"]["availability"] = $value["availability"];
+    //             $newData["offers"]["photo"] = $value["photo"];
+    //         }
 
-        }
+    //     }
         
     
-        return $newData;
+    //     return $newData;
 
-    }
+    // }
 
 }

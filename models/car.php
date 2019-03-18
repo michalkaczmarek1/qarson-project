@@ -75,7 +75,7 @@ class Car
 
     }
 
-    public function changeAvailabilityCar(string $availability, int $id, PDO $database)
+    public function changeAvailabilityCar($availability, $id, PDO $database)
     {
         // $this->availability = $availability === false ? "Nie" : "Tak";
         $changeSql = "UPDATE cars SET availability = '".$availability."' WHERE id = ".$id;
@@ -91,7 +91,7 @@ class Car
 
     }
 
-    public function deleteCar(int $id, PDO $database)
+    public function deleteCar($id, PDO $database)
     {
         // $this->availability = $availability === false ? "Nie" : "Tak";
         $deleteSql = "DELETE FROM cars WHERE id = ".$id;
