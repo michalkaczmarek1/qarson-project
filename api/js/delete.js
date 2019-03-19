@@ -24,9 +24,16 @@ $(document).ready(function(){
                 
                 json_url = route+"/api/api.php/cars";
 
+                if(result.success_delete){
+                    // $("<div class='alert alert-success'>"+result.success_change+"</div>").appendTo('.infos');
+                    $("<div class='infos alert alert-danger'>"+result.success_delete+"</div>").replaceAll('.infos');
+                } else {
+                    $("<div class='infos alert alert-danger'>"+result.error_delete+"</div>").replaceAll('.infos');
+                }
+
                 $.getJSON(json_url, function(data){
                 
-                    showCars(data, route);
+                    showCars(data, route, true);
                 
                 });
 

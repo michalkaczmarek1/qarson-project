@@ -75,11 +75,21 @@ if(count($_FILES) > 0){
             break;
         case 'change':
             $data = json_decode(file_get_contents("php://input"));
-            $Car->changeAvailabilityCar($_GET['change'], $data->id, $PDO);
+            if($Car->changeAvailabilityCar($_GET['change'], $data->id, $PDO)){
+                print_r(json_encode($Util->generateStatement('success_change', 'Status został zmieniony')));
+            } else {
+                print_r(json_encode($Util->generateStatement('error_change', 'Status nie został zmieniony')));
+            }
+            
             break;
         case 'delete':
             $data = json_decode(file_get_contents("php://input"));
-            $Car->deleteCar($data->id, $PDO);
+            if($Car->deleteCar($data->id, $PDO)){
+                print_r(json_encode($Util->generateStatement('success_delete', 'Rekord został usunięty')));
+            } else {
+                print_r(json_encode($Util->generateStatement('error_delete', 'Rekord nie został usunięty')));
+            }
+            break;
         default:
             $results = $Car->getCars($PDO);
             if(count($results) > 0){

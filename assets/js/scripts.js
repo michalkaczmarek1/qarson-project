@@ -1,6 +1,7 @@
-function showCars(data, route){
+function showCars(data, route, replace = false){
 
     //create table for get news
+    
     table = '<table class="table table-responsive" id="table"><thead><tr><th scope="col">Id</th><th scope="col">Marka</th><th scope="col">Model</th><th scope="col">Silnik</th><th scope="col">Nazwa modelu</th><th scope="col">Zdjęcie</th><th scope="col">Dostępność</th><th>Akcje</th></thead>';
     table += "<tbody>";
     
@@ -32,6 +33,41 @@ function showCars(data, route){
 
     table += "</tbody>";
     table += "</table>";
-
-    $(table).replaceAll('#table');
+    
+    if(replace === false){
+        $(table).appendTo('#content');
+    } else {
+        $(table).replaceAll('#table');
+    }
+    
 }
+
+//script responsible for read news
+
+$(document).ready(function () {
+    
+    var refresh = $('#refresh'),
+        route = 'http://localhost/qarson';
+        
+    // handling click read button
+    refresh.on('click', function (e) {
+        
+        
+        e.preventDefault();
+        
+        //send AJAX on server to read data
+        $.get(route+"/api/api.php/cars",
+            function (data) {
+                
+                $("<div class='infos'></div>").replaceAll('.infos');
+                showCars(data, route, true);
+            
+            },
+        );
+
+       
+        // $(this).attr('disabled', true);
+    });
+       
+  
+});
