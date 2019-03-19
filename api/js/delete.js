@@ -1,5 +1,5 @@
 
-//skrypt usuwajacy auto
+//script delete car
 $(document).ready(function(){
  
 
@@ -11,7 +11,7 @@ $(document).ready(function(){
     	
     	var id_car = $(this).attr('data-id');
     	
-        // wysłanie zapytanie do serwera o usuniecie
+        // send query AJAX to server
         $.ajax({
             url: $(this).attr('href'),
             type : "POST",
@@ -19,18 +19,17 @@ $(document).ready(function(){
             data : JSON.stringify({ id: id_car }),
             success : function(result) {
         
-                // przeładowanie listy samochodow
-                // showCars("", result.message);
                 
                 json_url = route+"/api/api.php/cars";
 
+                //display statement
                 if(result.success_delete){
-                    // $("<div class='alert alert-success'>"+result.success_change+"</div>").appendTo('.infos');
                     $("<div class='infos alert alert-danger'>"+result.success_delete+"</div>").replaceAll('.infos');
                 } else {
                     $("<div class='infos alert alert-danger'>"+result.error_delete+"</div>").replaceAll('.infos');
                 }
 
+                //reload list of cars
                 $.getJSON(json_url, function(data){
                 
                     showCars(data, route, true);

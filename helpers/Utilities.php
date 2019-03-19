@@ -19,7 +19,7 @@ class Utilities
              $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
              return $conn;
          } catch (PDOException $e) {
-             echo "Połączenie nie udane: " . $e->getMessage();
+             echo $this->generateStatement('error_db', 'Połączenie nie udane '.$e->getMessage());
          }
          
  
@@ -34,21 +34,22 @@ class Utilities
       * @param  mixed $path_file
       * @param  mixed $file_ext
       *
-      * @return void
+      * @return bool
       */
-     public function upload(string $dir, string $path_file, string $file_ext, array $file_upload){
+     public function upload(string $dir, string $path_file, string $file_ext, array $file_upload): bool {
  
          $this->dir = $dir;
          $this->path_file = $path_file;
          $this->file_ext = $file_ext;
  
-        //check whether file has extension csv
+        //check whether file has extension json
         if($file_ext !== 'json' && $this->checkEmptyFields($file_upload)) {
             echo json_encode($this->generateStatement("error_upload", "Plik nie jest w formacie json. Plik nie moze zostać przesłany."));
             $this->upload_success = 0;
             return false;
         }
         
+        //check whether file exist
         if (file_exists($path_file)) {
             echo json_encode($this->generateStatement("error_upload_exist", "Plik już istnieje. Plik nie moze zostać przesłany."));
             $this->upload_success = 0;
@@ -93,9 +94,9 @@ class Utilities
      * check whether fields are empty
      * @param  mixed $input
      *
-     * @return void
+     * @return bool
      */
-    public function checkEmptyFields(array $input){
+    public function checkEmptyFields(array $input): bool{
         
         $empty = false;
 
@@ -124,38 +125,10 @@ class Utilities
      *
      * @return void
      */
-    public function redirect($path = ""){
+    public function redirect(string $path = ""){
         
         header('Location: http://localhost/qarson/'.$path);
 
     }
-
-    /**
-     * loadData
-     * transformation data to array
-     * @param  mixed $data
-     *
-     * @return array
-     */
-    // public function loadData($data): array{
-        
-    //     // $newData["offers"] = [];
-
-    //     for ($i=0; $i < count($data); $i++) { 
-            
-    //         foreach ($data as $key => $value) {
-    //             $newData["offers"]["make"] = $value["make"];
-    //             $newData["offers"]["model"] = $value["model"];
-    //             $newData["offers"]["engine"] = $value["engine"];
-    //             $newData["offers"]["availability"] = $value["availability"];
-    //             $newData["offers"]["photo"] = $value["photo"];
-    //         }
-
-    //     }
-        
     
-    //     return $newData;
-
-    // }
-
 }

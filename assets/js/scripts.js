@@ -1,3 +1,9 @@
+/**
+ * create table for list of cars
+ * @param data 
+ * @param route 
+ * @param replace 
+ */
 function showCars(data, route, replace = false){
 
     //create table for get news
@@ -42,20 +48,17 @@ function showCars(data, route, replace = false){
     
 }
 
-//script responsible for read news
-
 $(document).ready(function () {
     
     var refresh = $('#refresh'),
         route = 'http://localhost/qarson';
         
-    // handling click read button
+    // handling click refresh button
     refresh.on('click', function (e) {
-        
         
         e.preventDefault();
         
-        //send AJAX on server to read data
+        //send AJAX on server to refresh data
         $.get(route+"/api/api.php/cars",
             function (data) {
                 
@@ -65,8 +68,6 @@ $(document).ready(function () {
             },
         );
 
-       
-        // $(this).attr('disabled', true);
     });
        
   

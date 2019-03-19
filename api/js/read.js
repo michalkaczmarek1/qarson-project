@@ -1,4 +1,4 @@
-//script responsible for read news
+//script responsible for read cars
 
 $(document).ready(function () {
     
@@ -21,7 +21,8 @@ $(document).ready(function () {
         );
 
        
-        // $(this).attr('disabled', true);
+        $(this).attr('disabled', true);
+        
     });
        
   

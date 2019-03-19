@@ -1,4 +1,4 @@
-<?php require_once('layouts/header.phtml'); 
+<?php require_once('layouts/header.html.php'); 
 
 // display the statements
 if(isset($_SESSION['error_empty'])){
@@ -35,4 +35,4 @@ if(isset($_SESSION['success_upload'])){
 <input type="submit" value="Wyślij" class="btn btn-success">
 </form>
 
-<?php require_once('layouts/footer.phtml'); ?>
+<?php require_once('layouts/footer.html.php'); ?>
