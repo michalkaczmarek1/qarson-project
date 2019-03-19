@@ -10,9 +10,7 @@
 #footer {
     background: rgba(0, 0, 0, 0.219);
     height: 100px;
-    position: absolute;
-    top: 120%;
-    
+    position: relative;
     width: 100%;
     
 }

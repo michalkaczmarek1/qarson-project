@@ -26,15 +26,15 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/qarson/config/constants.php");
         <a class="nav-link" href="<?php echo APP_PATH; ?>index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo APP_VIEW; ?>form.html.php" id="register">Zaimportuj dane</a>
+        <a class="nav-link" href="<?php echo APP_VIEW; ?>form.html.php">Zaimportuj dane</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo APP_VIEW; ?>read.html.php" id="register">Lista samochodów</a>
+        <a class="nav-link" href="<?php echo APP_VIEW; ?>read.html.php">Lista samochodów</a>
       </li>
     </ul>
 </nav>
 
-<div class="container" style="margin-top: 40px;">
+<div class="container" style="margin-top: 40px; min-height: 770px">
     <div class="row">
         <div class="col" id="content">
 <div class="infos">
