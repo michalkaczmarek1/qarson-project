@@ -11,15 +11,21 @@ class Utilities
      private $dbUser = 'root';
      private $dbPass = '';
      private $dsn = 'mysql:host=localhost;dbname=qarson_db;charset=utf8';
- 
-     public function dbConnection()
+    
+     /**
+      * create connection database
+      *
+      * @return PDO
+      */
+     public function dbConnection(): PDO
      {
          try {
              $conn = new PDO($this->dsn, $this->dbUser, $this->dbPass);
              $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
              return $conn;
          } catch (PDOException $e) {
-             echo $this->generateStatement('error_db', 'Połączenie nie udane '.$e->getMessage());
+             echo $this->generateStatement('error_app', 'Połączenie nie udane '.$e->getMessage(). '. Dane nie zostały zapisane w bazie.');
+             $this->redirect();
          }
          
  
@@ -58,7 +64,7 @@ class Utilities
         
         // upload file
         if (move_uploaded_file($file_upload["tmp_name"], $path_file)) {
-            echo json_encode($this->generateStatement("success_upload", "Plik ". basename( $file_upload["name"]). " został przesłany na serwer. Dane zostały zapisane w bazie"));
+            echo json_encode($this->generateStatement("success_upload", "Plik ". basename( $file_upload["name"]). " został przesłany na serwer."));
             $this->upload_success = 1;
             
             return true;
@@ -121,7 +127,7 @@ class Utilities
     /**
      * redirect
      * redirect to other page
-     * @param  mixed $path
+     * @param string $path
      *
      * @return void
      */

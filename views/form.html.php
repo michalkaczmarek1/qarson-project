@@ -1,6 +1,6 @@
 <?php require_once('layouts/header.html.php'); 
 
-// display the statements
+//display the statements
 if(isset($_SESSION['error_empty'])){
     echo "<div class='alert alert-danger'>".$_SESSION['error_empty']."</div>";
     unset($_SESSION['error_empty']);
@@ -21,6 +21,8 @@ if(isset($_SESSION['success_upload'])){
     echo "<div class='alert alert-success'>".$_SESSION['success_upload']."</div>";
     unset($_SESSION['success_upload']);
 }
+
+
 
 
 

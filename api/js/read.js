@@ -15,7 +15,12 @@ $(document).ready(function () {
         $.get(route+"/api/api.php/cars",
             function (data) {
                 
-                showCars(data, route);
+                if(data.empty){
+                    $("<div class='infos alert alert-danger'>Brak rekordów bazie</div>").appendTo('.infos');
+                } else {
+                    showCars(data, route);
+                }
+                
             
             },
         );

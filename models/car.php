@@ -20,7 +20,7 @@ class Car
     public function saveData(array $file_input, PDO $database): bool
     {
         // create sql
-        $sql = "INSERT INTO cars(mark, model, engine, model_name, photo, availability) VALUES ";
+        $insertSql = "INSERT INTO cars(mark, model, engine, model_name, photo, availability) VALUES ";
         $i = 0;
 
         foreach ($file_input as $value) {
@@ -30,27 +30,27 @@ class Car
             $value["photo"] = !isset($value["photo"]) ? "brak informacji" : $value["photo"];
             $value["availability"] = $value["availability"] === false ? "Nie" : $value["availability"];
 
-            $sql .= "('" . htmlentities($value["make"]) . "','" . htmlentities($value["model"]) . "','" . htmlentities($value["engine"]) . "',
+            $insertSql .= "('" . htmlentities($value["make"]) . "','" . htmlentities($value["model"]) . "','" . htmlentities($value["engine"]) . "',
             '" . htmlentities($this->model_name) . "','" . htmlentities($value["photo"]) . "','" . htmlentities($value["availability"]);
 
             $i++;
 
             if ($i === count($file_input)) {
-                $sql .= "')";
+                $insertSql .= "')";
             } else {
-                $sql .= "'),";
+                $insertSql .= "'),";
             }
 
         }
 
         // prepare sql
-        $insertSql = $database->prepare($sql);
+        $insertSql = $database->prepare($insertSql);
 
         // execute sql
         if ($insertSql->execute()) {
             return true;
         } else {
-            throw new PDOException("Błąd zapytania");
+            throw new PDOException("Nieprawidłowe zapytanie do bazy. Dane z pliku nie zostały zapisane. Skontaktuj sie z adminem");
             return false;
         }
 
@@ -65,18 +65,18 @@ class Car
     public function getCars(PDO $database): array
     {
         // create sql
-        $sql = "SELECT * FROM cars";
+        $getSql = "SELECT * FROM cars";
 
         // prepare sql
-        $getSql = $database->prepare($sql);
+        $getSql = $database->prepare($getSql);
 
         // execute sql
-        if ($getSql->execute() === false) {
-            throw new PDOException("Błąd zapytania");
-        }
+        $getSql->execute();
 
         if ($getSql->rowCount() > 0) {
             $result = $getSql->fetchAll();
+        } else {
+            $result['empty'] = true;
         }
 
         return $result;
@@ -101,7 +101,6 @@ class Car
 
         // execute sql
         if ($changeSql->execute() === false) {
-            throw new PDOException("Błąd zapytania");
             return false;
         } else {
             return true;
@@ -126,7 +125,6 @@ class Car
 
         // execute sql
         if ($deleteSql->execute() === false) {
-            throw new PDOException("Błąd zapytania");
             return false;
         } else {
             return true;

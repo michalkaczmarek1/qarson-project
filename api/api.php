@@ -45,7 +45,8 @@ if(count($_FILES) > 0){
             $Util->redirect('views/form.html.php');
             
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo $Util->generateStatement('error_app', 'Błąd aplikacji: '.$e->getMessage());
+            $Util->redirect();
         }
     
     } 
@@ -59,8 +60,11 @@ if(count($_FILES) > 0){
         // get list of cars
         case 'cars':
             $results = $Car->getCars($PDO);
-            if(count($results) > 0){
+            $results['empty'] = $Car->getCars($PDO);
+            if(count($results) > 0 && $results['empty'] === false){
                 echo json_encode($results);
+            } else {
+                echo json_encode($results['empty']);
             }
             break;
         // change availbality cars
@@ -84,8 +88,11 @@ if(count($_FILES) > 0){
             break;
         default:
             $results = $Car->getCars($PDO);
-            if(count($results) > 0){
+            $results['empty'] = $Car->getCars($PDO);
+            if(count($results) > 0 && $results['empty'] === false){
                 echo json_encode($results);
+            } else {
+                echo json_encode($results['empty']);
             }
             break;
     }

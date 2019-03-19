@@ -1,0 +1,37 @@
+/* style css application */
+
+/* menu styles */
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.219);
+}
+
+
+/* footer styles */
+#footer {
+    background: rgba(0, 0, 0, 0.219);
+    height: 100px;
+    position: absolute;
+    top: 120%;
+    
+    width: 100%;
+    
+}
+
+#footer p {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0px 40px;
+}
+
+#name_surname {
+    position: absolute;
+    top: 50%;
+    left: 87%;
+    transform: translateY(-50%);
+    
+}
+
+
+
+

@@ -4,4 +4,15 @@
 
 
 
-<?php require_once('views/layouts/footer.html.php'); ?>
+<?php 
+
+if(isset($_SESSION['error_app'])){
+    echo "<div class='alert alert-danger'>".$_SESSION['error_app']."</div>";
+    unset($_SESSION['error_app']);
+}
+
+
+require_once('views/layouts/footer.html.php'); 
+
+
+?>
